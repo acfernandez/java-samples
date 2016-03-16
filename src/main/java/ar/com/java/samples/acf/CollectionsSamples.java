@@ -45,6 +45,16 @@ public class CollectionsSamples {
 			
 		});
 		System.out.println(ret3);
+		
+		Integer ret4 = Iterables.find(list, new com.google.common.base.Predicate<Integer>() {
+			@Override
+			public boolean apply(Integer input) {
+				System.out.println("Evaluate arg " + input);
+				return input == 3;
+			}
+			
+		});
+		System.out.println(ret4);
 	}
 
 }
