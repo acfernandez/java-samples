@@ -5,6 +5,7 @@ import java.util.EnumMap;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 
 public class MapsSamples {
 
@@ -20,6 +21,13 @@ public class MapsSamples {
 		enumMap.put(Day.SATURDAY, false);
 		enumMap.put(Day.WEDNESDAY, false);
 		System.out.println(enumMap);
+		
+	    Multimap<String, Integer> duplicatedMap = ArrayListMultimap.create();
+	    duplicatedMap.put("a", 1);
+	    duplicatedMap.put("a", 1);
+	    duplicatedMap.put("a", 1);
+	    System.out.println(duplicatedMap.get("a").stream().distinct().count());
+	    
 	}
 
 	private enum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY }
