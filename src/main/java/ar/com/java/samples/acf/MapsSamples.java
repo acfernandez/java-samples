@@ -1,6 +1,7 @@
 package ar.com.java.samples.acf;
 
 import java.util.EnumMap;
+import java.util.HashMap;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
@@ -28,6 +29,9 @@ public class MapsSamples {
 	    duplicatedMap.put("a", 1);
 	    System.out.println(duplicatedMap.get("a").stream().distinct().count());
 	    
+	    HashMap<Object, Object> emptyMap = Maps.newHashMap();
+	    System.out.println(emptyMap.containsKey(null));
+
 	}
 
 	private enum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY }
