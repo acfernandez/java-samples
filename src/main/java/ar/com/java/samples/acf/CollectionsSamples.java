@@ -11,14 +11,31 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 public class CollectionsSamples {
-
+	
 	public static void main(String[] args) {
-		
-		ArrayList<Integer> list = Lists.newArrayList(1, 2, 3, 3, 3);
+		filter();
+		System.out.println("---------------------------------------------------------------------------------");
+		duplicates();
+	}
+	
+	private static void duplicates() {
+		ArrayList<Integer> list = Lists.newArrayList();
+		System.out.println("List " + list + " has " + list.stream().distinct().count() + " different elements");
+		list.add(1);
+		System.out.println("List " + list + " has " + list.stream().distinct().count() + " different elements");
+		list.add(2);
+		System.out.println("List " + list + " has " + list.stream().distinct().count() + " different elements");
+		list.add(2);
+		System.out.println("List " + list + " has " + list.stream().distinct().count() + " different elements");
+	}
 
+	@SuppressWarnings("unchecked")
+	private static void filter() {
+		
+		ArrayList<Integer> list = Lists.newArrayList(1, 2, 3, 3);
+		
 		// apache commons
 		Collection<Integer> ret = CollectionUtils.select(list, new Predicate() {
-			
 			@Override
 			public boolean evaluate(Object object) {
 				return object.equals(3);
@@ -35,8 +52,6 @@ public class CollectionsSamples {
 		});
 		System.out.println(ret2);
 		
-
-		// guava
 		Iterable<Integer> ret3 = Iterables.filter(list, new com.google.common.base.Predicate<Integer>() {
 			@Override
 			public boolean apply(Integer input) {
