@@ -2,6 +2,7 @@ package ar.com.java.samples.acf;
 
 import java.util.EnumMap;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
@@ -9,6 +10,18 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 
 public class MapsSamples {
+	
+	private enum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY }
+	
+	private enum Status { VERY_ANGRY, ANGRY, STEP, EXCITED, HAPPY, IN_LOVE, OPTIMISTIC}
+	
+	private static HashMap<Object, Object> statusMap;
+	
+	static {
+		statusMap = Maps.newHashMap();
+		statusMap.put(Day.SUNDAY, Status.VERY_ANGRY);
+		statusMap.put(Day.FRIDAY, Status.IN_LOVE);
+	}
 
 	public static void main(String[] args) {
 		ListMultimap<String, Boolean> map = ArrayListMultimap.create();
@@ -31,8 +44,8 @@ public class MapsSamples {
 	    
 	    HashMap<Object, Object> emptyMap = Maps.newHashMap();
 	    System.out.println(emptyMap.containsKey(null));
-
+	    
+	    System.out.println(statusMap.get(Day.FRIDAY));
 	}
 
-	private enum Day { SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY }
 }
