@@ -21,7 +21,4 @@ public class StreamsSamples {
 		System.out.println("result-> " + result);
 	}
 	
-	private void sample2() {
-		//replace instanceOf or creating map with other.engine.copy
-	}
 }

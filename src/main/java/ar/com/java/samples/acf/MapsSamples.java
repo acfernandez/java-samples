@@ -2,7 +2,6 @@ package ar.com.java.samples.acf;
 
 import java.util.EnumMap;
 import java.util.HashMap;
-import java.util.Map;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ListMultimap;
