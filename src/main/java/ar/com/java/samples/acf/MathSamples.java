@@ -1,10 +1,6 @@
 package ar.com.java.samples.acf;
 
-import static org.springframework.util.Assert.isTrue;
-
 import java.math.BigDecimal;
-import java.math.MathContext;
-import java.math.RoundingMode;
 
 import org.springframework.util.Assert;
 
@@ -32,31 +28,30 @@ public class MathSamples {
 	private static final int ONE_MILLON = 1000000;
 	
 	
-	private BigDecimal calculate(int areaResult, int perfResult, int companyResult, int areaMultiplicand,
-			int perfMultiplicand) {
-		Assert.isTrue(100 == (areaMultiplicand + perfMultiplicand), "The sum of multiplicands whould be 100%");
+	private BigDecimal calculate(BigDecimal areaResult, BigDecimal perfResult, BigDecimal companyResult, BigDecimal areaMultiplicand,
+			BigDecimal perfMultiplicand) {
+		Assert.isTrue(areaMultiplicand.add(perfMultiplicand).equals(BigDecimal.valueOf(100)), "The sum of multiplicands whould be 100%");
 
-		BigDecimal area = BigDecimal.valueOf(areaResult * areaMultiplicand);
-		BigDecimal perf = BigDecimal.valueOf(perfResult * perfMultiplicand);
+		BigDecimal area = areaResult.multiply(areaMultiplicand);
+		BigDecimal perf = perfResult.multiply(perfMultiplicand);
 
 		return (perf == BigDecimal.ZERO) ? BigDecimal.ZERO
 				: area
 				.add(perf)
-				.multiply(BigDecimal.valueOf(companyResult))
-				.divide(BigDecimal.valueOf(ONE_MILLON))
-				.round(new MathContext(1, RoundingMode.HALF_UP));
+				.multiply(companyResult)
+				.divide(BigDecimal.valueOf(ONE_MILLON));
 	}
 
-	private BigDecimal calculateForColaborator(int areaResult, int perfResult, int companyResult) {
-		return calculate(areaResult, perfResult, companyResult, 40, 60);
+	private BigDecimal calculateForCollaborator(BigDecimal areaResult, BigDecimal perfResult, BigDecimal companyResult) {
+		return calculate(areaResult, perfResult, companyResult, BigDecimal.valueOf(40), BigDecimal.valueOf(60));
 	}
 
-	private BigDecimal calculateForManager(int areaResult, int perfResult, int companyResult) {
-		return calculate(areaResult, perfResult, companyResult, 60, 40);
+	private BigDecimal calculateForManager(BigDecimal areaResult, BigDecimal perfResult, BigDecimal companyResult) {
+		return calculate(areaResult, perfResult, companyResult, BigDecimal.valueOf(60), BigDecimal.valueOf(40));
 	}
 	
-	private BigDecimal calculateForCoordinator(int areaResult, int perfResult, int companyResult) {
-		return calculate(areaResult, perfResult, companyResult, 50, 50);
+	private BigDecimal calculateForCoordinator(BigDecimal areaResult, BigDecimal perfResult, BigDecimal companyResult) {
+		return calculate(areaResult, perfResult, companyResult, BigDecimal.valueOf(50), BigDecimal.valueOf(50));
 	}
 	
 	private BigDecimal calculateTeam(int OSIValue, int FOValue, int PDValue) {
@@ -94,29 +89,29 @@ public class MathSamples {
 
 		MathSamples samples = new MathSamples();
 		
-		// Tests
-		isTrue("100".equals(samples.calculateArea(100, 100, 100, 100, 100).toString()));
-		isTrue("100".equals(samples.calculateTeam(100, 100, 100).toString()));
-		isTrue("100".equals(samples.calculateManager(100, 100, 100, 100).toString()));
-
-		isTrue("1".equals(samples.calculateForColaborator(100, 100, 100).toString()));
-		isTrue("2".equals(samples.calculateForColaborator(120, 120, 160).toString()));
-		isTrue("0.8".equals(samples.calculateForColaborator(80, 80, 100).toString()));
-		isTrue("0.6".equals(samples.calculateForColaborator(0, 100, 100).toString()));
-		isTrue("0".equals(samples.calculateForColaborator(100, 0, 100).toString()));
-
-		isTrue("1".equals(samples.calculateForManager(100, 100, 100).toString()));
-		isTrue("2".equals(samples.calculateForManager(120, 120, 160).toString()));
-		isTrue("0.4".equals(samples.calculateForManager(100, 100, 40).toString()));
-		isTrue("0".equals(samples.calculateForManager(100, 0, 100).toString()));
-		
-		// Real
-		BigDecimal area = samples.calculateArea(120, 120, 120, 100, 100);
+		// Manager
+		System.out.println("Manager ------------");
+		BigDecimal area = samples.calculateArea(120, 120, 120, 100, 80);
 		System.out.println("Area result: " + area);
 		BigDecimal manager = samples.calculateManager(120, 120, 100, 112);
 		System.out.println("Manager result: " + manager);
-		BigDecimal result = samples.calculateForManager(area.intValue(), manager.intValue(), 100);
+		BigDecimal result = samples.calculateForManager(BigDecimal.valueOf(103.24)/*area*/, manager, BigDecimal.valueOf(100));
 		System.out.println("Final result: " + result);
+		
+		// Coordinator
+		System.out.println("Coordinator ------------");
+		System.out.println("Area result: " + area);
+		BigDecimal team = samples.calculateTeam(120, 120, 100);
+		System.out.println("Team result: " + team);
+		BigDecimal result1 = samples.calculateForCoordinator(BigDecimal.valueOf(103.24)/*area*/, team, BigDecimal.valueOf(100));
+		System.out.println("Final result: " + result1);
+		
+		// Collaborator
+		System.out.println("Collaborator ------------");
+		System.out.println("Area result: " + area);
+		System.out.println("Team result: " + team);
+		BigDecimal result2 = samples.calculateForCollaborator(BigDecimal.valueOf(103.24)/*area*/, team, BigDecimal.valueOf(100));
+		System.out.println("Final result: " + result2);
 
 	}
 
